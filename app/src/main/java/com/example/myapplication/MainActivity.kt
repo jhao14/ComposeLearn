@@ -23,6 +23,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,11 +68,12 @@ class MainActivity : ComponentActivity() {
 //                        }
 //                    })
                     //LazyRow
-                    LazyRow(content = {
-                        items(items = getData()) { data ->
-                            More(title = data)
-                        }
-                    })
+//                    LazyRow(content = {
+//                        items(items = getData()) { data ->
+//                            More(title = data)
+//                        }
+//                    })
+                    Counter()
                 }
             }
         }
@@ -119,6 +124,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun Counter() {
+        //申明为State类型使其变为Compose可观察的状态，Compose检测到状态发生变化触发函数重组。
+        var number by remember{
+            mutableStateOf(0)
+        }
+        Column {
+            Text(text = "当前值：$number")
+            Button(onClick = {
+                number++
+                Log.i(TAG, "Counter: $number")
+            }){
+                Text(text="add")
+            }
+        }
+
+    }
 
     @Preview(showBackground = true)
     @Composable
