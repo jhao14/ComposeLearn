@@ -73,7 +73,19 @@ class MainActivity : ComponentActivity() {
 //                            More(title = data)
 //                        }
 //                    })
-                    Counter()
+//                    Counter()
+
+                    //状态提升
+                    var number by remember {
+                        mutableStateOf(0)
+                    }
+                    var number2 by remember {
+                        mutableStateOf(0)
+                    }
+                    Counter_2(number = number, onClickValue = {
+                        number += 1
+                        Log.i(TAG, "onCreate: Counter_2 number = $number")
+                    })
                 }
             }
         }
@@ -127,7 +139,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Counter() {
         //申明为State类型使其变为Compose可观察的状态，Compose检测到状态发生变化触发函数重组。
-        var number by remember{
+        var number by remember {
             mutableStateOf(0)
         }
         Column {
@@ -135,8 +147,22 @@ class MainActivity : ComponentActivity() {
             Button(onClick = {
                 number++
                 Log.i(TAG, "Counter: $number")
-            }){
-                Text(text="add")
+            }) {
+                Text(text = "add")
+            }
+        }
+
+    }
+
+    /**
+     * 状态提升
+     */
+    @Composable
+    fun Counter_2(number: Int, onClickValue: () -> Unit) {
+        Column {
+            Text(text = "当前值：$number")
+            Button(onClick = onClickValue) {
+                Text(text = "add")
             }
         }
 
