@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,25 +50,26 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    Greeting("Android")
-//                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 //                    for (i in 0..10){
 //                        More("Compose课程第${i+1}课,快来学习吧～")
 //                    }
 //                }
-                    //LazyColumn
+                        //LazyColumn
 //                    LazyColumn(content = {
 //                        //1.写法一
 ////                    item {
-////                        for (i in 1..20){
-////                            More("Compose课程第${i+1}课,快来学习吧～")
-////                        }
+                        for (i in 0..10) {
+//                            More("Compose课程第${i+1}课,快来学习吧～")
+                            more(title = "Compose课程第${i + 1}课,快来学习吧～")
+                        }
 ////                    }
 //                        //将item包装成一个list
 //                        items(items = getData()) { data ->
 //                            More(title = data)
 //                        }
 //                    })
-                    //LazyRow
+                        //LazyRow
 //                    LazyRow(content = {
 //                        items(items = getData()) { data ->
 //                            More(title = data)
@@ -75,17 +77,18 @@ class MainActivity : ComponentActivity() {
 //                    })
 //                    Counter()
 
-                    //状态提升
-                    var number by remember {
-                        mutableStateOf(0)
+                        //状态提升
+//                    var number by remember {
+//                        mutableStateOf(0)
+//                    }
+//                    var number2 by remember {
+//                        mutableStateOf(0)
+//                    }
+//                    Counter_2(number = number, onClickValue = {
+//                        number += 1
+//                        Log.i(TAG, "onCreate: Counter_2 number = $number")
+//                    })
                     }
-                    var number2 by remember {
-                        mutableStateOf(0)
-                    }
-                    Counter_2(number = number, onClickValue = {
-                        number += 1
-                        Log.i(TAG, "onCreate: Counter_2 number = $number")
-                    })
                 }
             }
         }
@@ -166,6 +169,33 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    }
+
+    @Composable
+    fun more(title: String) {
+        var expended by remember {
+            mutableStateOf(false)
+        }
+        Column {
+            Row(
+                modifier = Modifier
+                    .background(Color.Red)
+                    .padding(10.dp)
+            ) {
+                Text(
+                    text = title,
+                    fontSize = 16.sp,
+                    color = Color.White,
+                    modifier = Modifier.weight(1f)
+                )
+                Button(onClick = { expended = !expended }) {
+                    Text(text = if (!expended) "查看详情" else "收起", color = Color.White)
+                }
+            }
+            if (expended) {
+                Text(text = "我是详情哈哈哈哈哈", modifier = Modifier.height(100.dp))
+            }
+        }
     }
 
     @Preview(showBackground = true)
